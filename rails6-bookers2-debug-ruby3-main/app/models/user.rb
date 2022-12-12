@@ -8,11 +8,15 @@ class User < ApplicationRecord
   has_many :bool_comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
 
+
+
   has_many :follower, class_name:"Relationship", foreign_key:"follower_id", dependent: :destroy
   has_many :following_user, through: :follower, source: :followed
 
   has_many :followed, class_name:"Relationship", foreign_key:"followed_id", dependent: :destroy
   has_many :followed_user, through: :followed, source: :follower
+
+
 
   has_one_attached :profile_image
 
@@ -27,4 +31,9 @@ class User < ApplicationRecord
     end
     profile_image.variant(resize_to_limit: [100, 100]).processed
   end
+
+  # def following?(user)
+  #   following_user.include?(user)
+  # end
+
 end
